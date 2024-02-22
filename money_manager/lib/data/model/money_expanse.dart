@@ -10,12 +10,6 @@ enum SupportType {
 }
 
 class MoneyExpense {
-  double amount;
-  DateTime dateTime;
-  String motive;
-  ExpenseType expenseType;
-  SupportType supportType;
-
   MoneyExpense({
     required this.amount,
     required this.dateTime,
@@ -23,6 +17,12 @@ class MoneyExpense {
     required this.expenseType,
     required this.supportType,
   });
+
+  double amount;
+  DateTime dateTime;
+  String motive;
+  ExpenseType expenseType;
+  SupportType supportType;
 
   List toList() {
     return [amount, dateTime, motive, expenseType, supportType];

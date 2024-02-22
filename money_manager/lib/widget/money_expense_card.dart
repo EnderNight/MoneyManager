@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:money_manager/data/model/money_expanse.dart';
 
 class MoneyExpenseCard extends StatelessWidget {
-  final MoneyExpense expense;
+  const MoneyExpenseCard({
+    super.key,
+    required this.expense,
+  });
 
-  const MoneyExpenseCard({super.key, required this.expense});
+  final MoneyExpense expense;
 
   @override
   Widget build(BuildContext context) {
