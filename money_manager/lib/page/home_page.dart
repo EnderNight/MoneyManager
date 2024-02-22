@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager/widget/money_expense_card.dart';
+
+import '../data/model/money_expanse.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final MoneyExpense expense = MoneyExpense(
+    amount: 13,
+    dateTime: DateTime.now(),
+    motive: "Just a simple test",
+    expenseType: ExpenseType.expense,
+    supportType: SupportType.debitCard,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Money Manager'),
+      appBar: AppBar(
+        title: const Text('Money Manager'),
+      ),
+      body: Center(
+        child: MoneyExpenseCard(
+          expense: expense,
         ),
-        body: const Center(
-          child: Text('Hello World!'),
-        ));
+      ),
+    );
   }
 }
