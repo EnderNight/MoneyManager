@@ -1,2 +1,2 @@
 # MoneyManger
-A simple money expense Flutter app.
+A simple money expense tracker Flutter app.
