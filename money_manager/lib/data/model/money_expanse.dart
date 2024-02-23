@@ -36,4 +36,24 @@ class MoneyExpense {
         "expenseType: $expenseType, "
         "supportType: $supportType";
   }
+
+  static String expenseTypeToString(ExpenseType type) {
+    switch (type) {
+      case ExpenseType.expense:
+        return "Expense";
+      case ExpenseType.benefice:
+        return "Benefice";
+    }
+  }
+
+  static String supportTypeToString(SupportType type) {
+    switch (type) {
+      case SupportType.debitCard:
+        return "Debit Card";
+      case SupportType.transfer:
+        return "Transfer";
+      case SupportType.cash:
+        return "Cash";
+    }
+  }
 }

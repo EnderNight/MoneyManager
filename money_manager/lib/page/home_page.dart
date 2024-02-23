@@ -7,10 +7,10 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   final MoneyExpense expense = MoneyExpense(
-    amount: 13,
+    amount: 130,
     dateTime: DateTime.now(),
     motive: "Just a simple test",
-    expenseType: ExpenseType.expense,
+    expenseType: ExpenseType.benefice,
     supportType: SupportType.debitCard,
   );
 
