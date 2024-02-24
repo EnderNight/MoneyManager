@@ -1,34 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_manager/data/model/money_expanse.dart';
+
+import '../data/model/money_expanse.dart';
 
 class MoneyExpenseCard extends StatelessWidget {
   const MoneyExpenseCard({
     super.key,
     required this.expense,
+    required this.onTap,
   });
 
   final MoneyExpense expense;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxHeight: 120),
-      child: Container(
-        margin: const EdgeInsets.all(10.0),
-        child: Card(
-          child: Container(
-            margin: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Center(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("${expense.amount.toStringAsFixed(2)} €")),
-                ),
-                const VerticalDivider(),
-                _ExpenseInfoWidget(expense: expense),
-              ],
+    return GestureDetector(
+      onTap: onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 120),
+        child: Container(
+          margin: const EdgeInsets.all(10.0),
+          child: Card(
+            child: Container(
+              margin: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: 80,
+                    child: Center(
+                        child: Text("${expense.amount.toStringAsFixed(2)} €")),
+                  ),
+                  const VerticalDivider(),
+                  _ExpenseInfoWidget(expense: expense),
+                ],
+              ),
             ),
           ),
         ),
@@ -39,7 +46,6 @@ class MoneyExpenseCard extends StatelessWidget {
 
 class _ExpenseInfoWidget extends StatelessWidget {
   const _ExpenseInfoWidget({
-    super.key,
     required this.expense,
   });
 
