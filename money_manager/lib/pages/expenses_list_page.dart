@@ -10,7 +10,11 @@ class ExpensesListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Expenses"),
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: const Icon(Icons.sync))
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.sync),
+            tooltip: "Synchronize with the database",
+          )
         ],
       ),
       body: const Center(
