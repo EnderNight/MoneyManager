@@ -18,4 +18,9 @@ class HiveService {
     final box = await Hive.openBox<Expense>(expenseBoxName);
     box.deleteAt(index);
   }
+
+  Future<void> clearExpenses() async {
+    final box = await Hive.openBox<Expense>(expenseBoxName);
+    box.clear();
+  }
 }

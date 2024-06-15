@@ -42,16 +42,21 @@ def get_expenses():
 
 
 @app.post("/api/expenses")
-def add_expense():
+def add_expenses():
     data = request.json
 
-    new_expense = Expenses(
-        amount=data["amount"],
-        date=data["date"],
-        description=data["description"],
-    )
+    if data:
+        for expense in data:
+            new_expense = Expenses(
+                amount=expense["amount"],
+                date=expense["date"],
+                description=expense["description"],
+            )
 
-    db.session.add(new_expense)
-    db.session.commit()
+            db.session.add(new_expense)
 
-    return "", 201
+        db.session.commit()
+
+        return "", 201
+
+    return "", 200

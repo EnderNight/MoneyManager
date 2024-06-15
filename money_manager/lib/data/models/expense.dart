@@ -22,4 +22,18 @@ class Expense {
     required this.description,
     required this.isLocal,
   });
+
+  Expense.fromJson(Map<String, dynamic> json)
+      : amount = json["amount"],
+        date = DateTime.parse(json["date"]),
+        description = json["description"],
+        isLocal = false;
+
+  Map<String, dynamic> toJson() {
+    return {
+      "amount": amount,
+      "date": date.toIso8601String(),
+      "description": description,
+    };
+  }
 }

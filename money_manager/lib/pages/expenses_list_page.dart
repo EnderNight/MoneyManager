@@ -32,6 +32,11 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
     _loadExpenses();
   }
 
+  Future<void> _clearExpenses() async {
+    await hiveService.clearExpenses();
+    _loadExpenses();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
