@@ -8,7 +8,8 @@ class NetworkService {
       List<Expense> expenses, String authority) async {
     final toSend = expenses
         .where((expense) => expense.isLocal)
-        .map((expense) => expense.toJson());
+        .map((expense) => expense.toJson())
+        .toList();
     final apiUrl = Uri.http("$authority:5000", "/api/expenses");
 
     await http.post(
@@ -26,8 +27,7 @@ class NetworkService {
     var response = await http.get(apiUrl);
 
     if (response.statusCode == 200) {
-      var jsonExpenses =
-          convert.jsonDecode(response.body) as List<Map<String, dynamic>>;
+      var jsonExpenses = convert.jsonDecode(response.body) as List<dynamic>;
 
       return jsonExpenses
           .map((jsonExpense) => Expense.fromJson(jsonExpense))

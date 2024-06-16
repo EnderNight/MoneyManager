@@ -9,6 +9,11 @@ class HiveService {
     await box.add(expense);
   }
 
+  Future<void> addExpenses(List<Expense> expenses) async {
+    final box = await Hive.openBox<Expense>(expenseBoxName);
+    await box.addAll(expenses);
+  }
+
   Future<List<Expense>> getExpenses() async {
     final box = await Hive.openBox<Expense>(expenseBoxName);
     return box.values.toList();
@@ -21,6 +26,6 @@ class HiveService {
 
   Future<void> clearExpenses() async {
     final box = await Hive.openBox<Expense>(expenseBoxName);
-    box.clear();
+    await box.clear();
   }
 }
