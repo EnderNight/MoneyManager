@@ -1,3 +1,3 @@
 # MoneyManager
 
-A money expense tracker service.
+A money expense tracker app.
