@@ -1,3 +1,3 @@
 # money_manager
 
-A new Flutter project.
+A money expense tracker app
