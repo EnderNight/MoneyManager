@@ -1,3 +1,3 @@
-# MoneyManager
+# money_manager
 
-A money expense tracker app.
+A money expense tracker app
