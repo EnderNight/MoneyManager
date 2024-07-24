@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_manager/data/database.dart';
 import 'package:money_manager/data/expense.dart';
 import 'package:money_manager/pages/expense_page.dart';
@@ -90,31 +91,44 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: expenses.length,
-          itemBuilder: (context, index) => ExpenseWidget(
-            expense: expenses[index],
-            onTap: () async {
-              Expense? expense =
-                  await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ExpensePage(
-                  pageTitle: 'Update expense',
-                  buttonText: 'Save',
+        child: Column(
+          children: [
+            SizedBox(
+              height: 70,
+              child: _ExpenseStatusWidget(
+                expenseTotal: widget.db.getExpenseTotal(),
+                incomeTotal: widget.db.getIncomeTotal(),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: expenses.length,
+                itemBuilder: (context, index) => ExpenseWidget(
                   expense: expenses[index],
+                  onTap: () async {
+                    Expense? expense =
+                        await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ExpensePage(
+                        pageTitle: 'Update expense',
+                        buttonText: 'Save',
+                        expense: expenses[index],
+                      ),
+                    ));
+
+                    if (expense == null) return;
+
+                    updateExpense(expense, index);
+                  },
+                  onLongPress: () {
+                    setState(() {
+                      deleteMode = true;
+                      selectedExpense = index;
+                    });
+                  },
                 ),
-              ));
-
-              if (expense == null) return;
-
-              updateExpense(expense, index);
-            },
-            onLongPress: () {
-              setState(() {
-                deleteMode = true;
-                selectedExpense = index;
-              });
-            },
-          ),
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -134,6 +148,42 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
         tooltip: 'Add a new expense',
         child: const Icon(Icons.add),
       ),
+    );
+  }
+}
+
+class _ExpenseStatusWidget extends StatelessWidget {
+  final double expenseTotal;
+  final double incomeTotal;
+  final amountFormat = NumberFormat.compactCurrency(
+    symbol: '€',
+    decimalDigits: 2,
+  );
+
+  _ExpenseStatusWidget({
+    super.key,
+    required this.expenseTotal,
+    required this.incomeTotal,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Center(
+          child: Text(
+            amountFormat.format(expenseTotal + incomeTotal),
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text('Income: ${amountFormat.format(incomeTotal)}'),
+            Text('Expenses: ${amountFormat.format(expenseTotal)}'),
+          ],
+        )
+      ],
     );
   }
 }

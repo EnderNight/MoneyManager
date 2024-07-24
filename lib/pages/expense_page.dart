@@ -63,6 +63,8 @@ class _ExpensePageState extends State<ExpensePage> {
                     const TextInputType.numberWithOptions(decimal: true),
                 controller: _amountController,
                 label: 'Amount',
+                maxLength: null,
+                counterText: null,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please, enter an amount";
@@ -79,6 +81,8 @@ class _ExpensePageState extends State<ExpensePage> {
                 keyBoardType: null,
                 controller: _descController,
                 label: 'Description',
+                maxLength: 50,
+                counterText: null,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please, enter a description';
@@ -146,12 +150,16 @@ class _ExpenseTextField extends StatelessWidget {
   final String? Function(String?) validator;
   final String label;
   final TextInputType? keyBoardType;
+  final int? maxLength;
+  final String? counterText;
 
   const _ExpenseTextField({
     required this.controller,
     required this.validator,
     required this.label,
     required this.keyBoardType,
+    required this.maxLength,
+    required this.counterText,
   });
 
   @override
@@ -159,6 +167,7 @@ class _ExpenseTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        maxLength: maxLength,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         keyboardType: keyBoardType,
         controller: controller,
@@ -166,6 +175,7 @@ class _ExpenseTextField extends StatelessWidget {
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           label: Text(label),
+          counterText: counterText,
         ),
       ),
     );
