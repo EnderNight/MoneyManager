@@ -98,6 +98,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
               Expense? expense =
                   await Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => ExpensePage(
+                  pageTitle: 'Update expense',
                   buttonText: 'Save',
                   expense: expenses[index],
                 ),
@@ -120,6 +121,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
         onPressed: () async {
           Expense? expense = await Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const ExpensePage(
+              pageTitle: 'Add expense',
               expense: null,
               buttonText: 'Add',
             ),

@@ -6,7 +6,7 @@ class ExpenseWidget extends StatelessWidget {
   final Expense expense;
   final void Function()? onTap;
   final void Function()? onLongPress;
-  final dateFormat = DateFormat('dd/MM/yyyy');
+  final dateFormat = DateFormat('yyyy-MM-dd');
   final amountFormat = NumberFormat.compactCurrency(
     symbol: '€',
     decimalDigits: 2,

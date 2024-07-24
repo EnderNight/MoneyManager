@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_manager/data/expense.dart';
 
 class ExpensePage extends StatefulWidget {
   final String buttonText;
+  final String pageTitle;
   final Expense? expense;
 
   const ExpensePage({
     super.key,
     required this.buttonText,
     required this.expense,
+    required this.pageTitle,
   });
 
   @override
@@ -17,8 +20,10 @@ class ExpensePage extends StatefulWidget {
 
 class _ExpensePageState extends State<ExpensePage> {
   final _formKey = GlobalKey<FormState>();
+  final dateFormat = DateFormat('yyyy-MM-dd');
   late TextEditingController _amountController;
   late TextEditingController _descController;
+  late TextEditingController _dateController;
 
   @override
   void initState() {
@@ -27,6 +32,9 @@ class _ExpensePageState extends State<ExpensePage> {
     _amountController =
         TextEditingController(text: widget.expense?.amount.toString());
     _descController = TextEditingController(text: widget.expense?.desc);
+    _dateController = TextEditingController(
+        text: dateFormat.format(
+            widget.expense == null ? DateTime.now() : widget.expense!.date));
   }
 
   @override
@@ -35,13 +43,14 @@ class _ExpensePageState extends State<ExpensePage> {
 
     _amountController.dispose();
     _descController.dispose();
+    _dateController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add expense'),
+        title: Text(widget.pageTitle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -78,6 +87,34 @@ class _ExpensePageState extends State<ExpensePage> {
                   return null;
                 },
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  readOnly: true,
+                  controller: _dateController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    label: const Text('Date'),
+                    suffixIcon: IconButton(
+                      onPressed: () async {
+                        DateTime? newDate = await showDatePicker(
+                          context: context,
+                          initialDate: widget.expense == null
+                              ? DateTime.now()
+                              : widget.expense!.date,
+                          firstDate: DateTime(2015, 8),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (newDate == null) return;
+
+                        _dateController.text = dateFormat.format(newDate);
+                      },
+                      icon: const Icon(Icons.calendar_today),
+                    ),
+                  ),
+                ),
+              ),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -85,7 +122,7 @@ class _ExpensePageState extends State<ExpensePage> {
 
                     double amount = double.parse(realAmount.toStringAsFixed(2));
                     String desc = _descController.text;
-                    DateTime date = DateTime.now();
+                    DateTime date = DateTime.parse(_dateController.text);
 
                     Navigator.of(context).pop(Expense(
                       amount: amount,
@@ -122,6 +159,7 @@ class _ExpenseTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         keyboardType: keyBoardType,
         controller: controller,
         validator: validator,

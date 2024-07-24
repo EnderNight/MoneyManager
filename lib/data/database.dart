@@ -24,8 +24,6 @@ class Database {
   List<Expense> get() {
     var expenses = _box.get(_keyName) as List<dynamic>;
 
-    if (expenses.isEmpty) return [];
-
     return expenses.map((ele) => Expense.fromMap(ele)).toList();
   }
 
