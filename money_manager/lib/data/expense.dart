@@ -24,4 +24,9 @@ class Expense {
       date: map['date'],
     );
   }
+
+  @override
+  String toString() {
+    return 'Expense: $amount, $desc, $date';
+  }
 }

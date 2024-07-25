@@ -1,11 +1,7 @@
-import 'dart:io';
-
-import 'package:path/path.dart';
+import 'package:money_manager/core/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager/data/database.dart';
-import 'package:excel/excel.dart';
-import 'package:money_manager/data/expense.dart';
 
 class ImportExportPage extends StatelessWidget {
   final Database db;
@@ -15,40 +11,32 @@ class ImportExportPage extends StatelessWidget {
     required this.db,
   });
 
-  Future<void> exportExcel() async {
-    List<Expense> expenses = db.get();
-    Excel excel = Excel.createExcel();
-    Sheet sheet = excel['expenses'];
+  Future<bool> exportDatabase() async {
+    var expenses = db.get();
+    var userDirectory = await FilePicker.platform.getDirectoryPath();
 
-    excel.delete('Sheet1');
+    if (userDirectory == null) return false;
 
-    var rows = expenses
-        .map((expense) => [
-              DoubleCellValue(expense.amount),
-              TextCellValue(expense.desc),
-              DateCellValue(
-                year: expense.date.year,
-                month: expense.date.month,
-                day: expense.date.day,
-              ),
-            ])
-        .toList();
+    List<List<String>> rows = [];
 
-    for (var row in rows) {
-      sheet.appendRow(row);
+    for (final expense in expenses) {
+      rows.add([
+        expense.amount.toString(),
+        expense.desc,
+        expense.date.toString(),
+      ]);
     }
 
-    List<int>? fileBytes = excel.save();
-    String? userDirectory = await FilePicker.platform.getDirectoryPath();
+    var csv = Csv(path: '$userDirectory/expenses.csv', rows: rows);
 
-    if (fileBytes != null && userDirectory != null) {
-      File(join('$userDirectory/expenses.xlsx'))
-        ..createSync(recursive: true)
-        ..writeAsBytesSync(fileBytes);
-    }
+    csv.write();
+
+    return true;
   }
 
-  Future<void> importExcel() async {}
+  Future<bool> importDatabase() async {
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +50,9 @@ class ImportExportPage extends StatelessWidget {
             children: [
               OutlinedButton.icon(
                 onPressed: () async {
-                  await exportExcel();
+                  var res = await exportDatabase();
 
-                  if (context.mounted) {
+                  if (context.mounted && res) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Exported database')));
                     Navigator.of(context).pop();
@@ -75,9 +63,9 @@ class ImportExportPage extends StatelessWidget {
               ),
               OutlinedButton.icon(
                 onPressed: () async {
-                  await importExcel();
+                  var res = await importDatabase();
 
-                  if (context.mounted) {
+                  if (context.mounted && res) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Imported database')));
                     Navigator.of(context).pop();

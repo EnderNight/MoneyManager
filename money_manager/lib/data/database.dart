@@ -47,13 +47,13 @@ class Database {
     var expenses = get();
 
     return expenses.fold(
-        0, (cur, expense) => cur + expense.amount > 0 ? expense.amount : 0);
+        0.0, (cur, expense) => cur + (expense.amount > 0 ? expense.amount : 0));
   }
 
   double getExpenseTotal() {
     var expenses = get();
 
     return expenses.fold(
-        0, (cur, expense) => cur + expense.amount < 0 ? expense.amount : 0);
+        0.0, (cur, expense) => cur + (expense.amount < 0 ? expense.amount : 0));
   }
 }

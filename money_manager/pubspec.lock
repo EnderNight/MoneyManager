@@ -185,22 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
-  excel:
-    dependency: "direct main"
-    description:
-      name: excel
-      sha256: "86958dd0771d4ce372cc8332d17d18d803bbcef6ab6d12ddd071699e4c232573"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.3"
   fake_async:
     dependency: transitive
     description:
