@@ -161,7 +161,6 @@ class _ExpenseStatusWidget extends StatelessWidget {
   );
 
   _ExpenseStatusWidget({
-    super.key,
     required this.expenseTotal,
     required this.incomeTotal,
   });
