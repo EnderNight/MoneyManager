@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:intl/intl.dart';
 import 'package:money_manager/core/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager/data/database.dart';
+import 'package:money_manager/data/expense.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class ImportExportPage extends StatelessWidget {
   final Database db;
@@ -13,9 +18,28 @@ class ImportExportPage extends StatelessWidget {
 
   Future<bool> exportDatabase() async {
     var expenses = db.get();
-    var userDirectory = await FilePicker.platform.getDirectoryPath();
+    var packageInfo = await PackageInfo.fromPlatform();
+    var date = DateTime.now();
+    var dateFormater = DateFormat('yyyy-MM-dd');
+    var fileName =
+        'expenses_${dateFormater.format(date)}_v${packageInfo.version}.csv';
 
-    if (userDirectory == null) return false;
+    String? destFile;
+
+    if (Platform.isLinux) {
+      destFile = await FilePicker.platform.saveFile(
+        fileName: fileName,
+        dialogTitle: 'Export database',
+      );
+    } else if (Platform.isAndroid) {
+      var result = await FilePicker.platform.getDirectoryPath();
+
+      if (result == null) return false;
+
+      destFile = '$result/$fileName';
+    }
+
+    if (destFile == null) return false;
 
     List<List<String>> rows = [];
 
@@ -27,7 +51,10 @@ class ImportExportPage extends StatelessWidget {
       ]);
     }
 
-    var csv = Csv(path: '$userDirectory/expenses.csv', rows: rows);
+    var csv = Csv(
+      path: destFile,
+      rows: rows,
+    );
 
     csv.write();
 
@@ -35,6 +62,28 @@ class ImportExportPage extends StatelessWidget {
   }
 
   Future<bool> importDatabase() async {
+    var result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      var csvPath = result.files.first.path!;
+
+      var csv = Csv.read(csvPath);
+
+      var extExpenses = csv.rows
+          .map(
+            (row) => Expense(
+              amount: double.parse(row[0]),
+              desc: row[1],
+              date: DateTime.parse(row[2]),
+            ),
+          )
+          .toList();
+
+      db.createAll(extExpenses);
+
+      return true;
+    }
+
     return false;
   }
 

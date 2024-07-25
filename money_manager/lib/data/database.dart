@@ -21,6 +21,16 @@ class Database {
     _save(expenses);
   }
 
+  void createAll(List<Expense> expenses) {
+    var localExpenses = get();
+
+    for (final expense in expenses) {
+      if (!localExpenses.contains(expense)) localExpenses.add(expense);
+    }
+
+    _save(localExpenses);
+  }
+
   List<Expense> get() {
     var expenses = _box.get(_keyName) as List<dynamic>;
 

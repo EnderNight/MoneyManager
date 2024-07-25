@@ -29,4 +29,17 @@ class Expense {
   String toString() {
     return 'Expense: $amount, $desc, $date';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is Expense) {
+      return amount == other.amount && desc == other.desc && date == other.date;
+    }
+
+    return false;
+  }
+
+  // For == overloading
+  @override
+  int get hashCode => Object.hash(amount, desc, date);
 }
