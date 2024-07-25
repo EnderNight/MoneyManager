@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:money_manager/data/database.dart';
 import 'package:money_manager/data/expense.dart';
 import 'package:money_manager/pages/expense_page.dart';
+import 'package:money_manager/pages/import_export_page.dart';
 import 'package:money_manager/widgets/expense_widget.dart';
 
 class ExpenseListPage extends StatefulWidget {
@@ -87,7 +88,20 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                   icon: const Icon(Icons.close),
                 ),
               ]
-            : [],
+            : [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ImportExportPage(
+                          db: widget.db,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.import_export),
+                ),
+              ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
