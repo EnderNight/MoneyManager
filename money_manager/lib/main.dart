@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:money_manager/app.dart';
+
 void main() {
-  print('Hello World');
+  runApp(const MoneyManagerApp());
 }
