@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:money_manager/app.dart';
-import 'package:money_manager/features/expenses/data/models/expense_model.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Hive.initFlutter();
-
-  await Hive.openBox('expenses');
-
-  Hive.registerAdapter(ExpenseModelAdapter());
-
+void main(List<String> args) {
   runApp(const MoneyManagerApp());
+}
+
+class MoneyManagerApp extends StatelessWidget {
+  const MoneyManagerApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Text('Hello World!'),
+        ),
+      ),
+    );
+  }
 }
