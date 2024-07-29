@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_manager/features/expenses/presentation/blocs/expense/expense_bloc.dart';
-import 'package:money_manager/features/expenses/presentation/widgets/expense_form.dart';
+import 'package:money_manager/presentation/blocs/expense/expense_bloc.dart';
+import 'package:money_manager/presentation/widgets/expense_form.dart';
 
 class AddExpensePage extends StatelessWidget {
   const AddExpensePage({super.key});

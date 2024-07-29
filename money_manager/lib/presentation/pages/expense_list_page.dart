@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_manager/features/expenses/presentation/blocs/expense/expense_bloc.dart';
-import 'package:money_manager/features/expenses/presentation/pages/add_expense_page.dart';
-import 'package:money_manager/features/expenses/presentation/pages/edit_expense_page.dart';
-import 'package:money_manager/features/expenses/presentation/widgets/expense_card.dart';
-import 'package:money_manager/features/import_export/pages/import_export_page.dart';
+import 'package:money_manager/presentation/blocs/expense/expense_bloc.dart';
+import 'package:money_manager/presentation/pages/add_expense_page.dart';
+import 'package:money_manager/presentation/pages/edit_expense_page.dart';
+import 'package:money_manager/presentation/widgets/expense_card.dart';
+import 'package:money_manager/presentation/pages/import_export_page.dart';
 
 class ExpenseListPage extends StatelessWidget {
   const ExpenseListPage({super.key});

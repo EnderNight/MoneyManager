@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:money_manager/core/utils/date_formatter.dart';
-import 'package:money_manager/features/expenses/data/models/expense.dart';
+import 'package:money_manager/data/models/expense.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class ExpenseCsv {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:money_manager/features/expenses/data/models/expense.dart';
-import 'package:money_manager/features/expenses/data/repositories/expense_repository.dart';
+import 'package:money_manager/data/models/expense.dart';
+import 'package:money_manager/data/repositories/expense_repository.dart';
 
 part 'expense_event.dart';
 part 'expense_state.dart';

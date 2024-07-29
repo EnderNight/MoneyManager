@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:money_manager/features/expenses/data/models/expense.dart';
+import 'package:money_manager/data/models/expense.dart';
 
 class ExpenseRepository {
   final Box<Expense> expenseBox;

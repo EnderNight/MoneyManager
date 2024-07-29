@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_manager/features/expenses/data/models/expense.dart';
-import 'package:money_manager/features/expenses/presentation/blocs/expense/expense_bloc.dart';
-import 'package:money_manager/features/import_export/expense_csv.dart';
+import 'package:money_manager/data/models/expense.dart';
+import 'package:money_manager/presentation/blocs/expense/expense_bloc.dart';
+import 'package:money_manager/core/expense_csv.dart';
 
 class ImportExportPage extends StatelessWidget {
   const ImportExportPage({super.key});

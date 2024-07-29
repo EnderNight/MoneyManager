@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_manager/app.dart';
-import 'package:money_manager/features/expenses/data/models/expense.dart';
-import 'package:money_manager/features/expenses/data/repositories/expense_repository.dart';
+import 'package:money_manager/data/models/expense.dart';
+import 'package:money_manager/data/repositories/expense_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

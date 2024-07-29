@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/utils/date_formatter.dart';
-import 'package:money_manager/features/expenses/data/models/expense.dart';
+import 'package:money_manager/data/models/expense.dart';
 
 class ExpenseCard extends StatelessWidget {
   final Expense expense;
