@@ -5,6 +5,7 @@ import 'package:money_manager/presentation/pages/add_expense_page.dart';
 import 'package:money_manager/presentation/pages/edit_expense_page.dart';
 import 'package:money_manager/presentation/widgets/expense_card.dart';
 import 'package:money_manager/presentation/pages/import_export_page.dart';
+import 'package:money_manager/presentation/widgets/expense_status.dart';
 
 class ExpenseListPage extends StatelessWidget {
   const ExpenseListPage({super.key});
@@ -28,33 +29,52 @@ class ExpenseListPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is ExpenseLoadedState) {
             final expenses = state.expenses;
+            final income = expenses.fold(
+                0.0,
+                (acc, expense) =>
+                    expense.amount > 0 ? acc + expense.amount : acc);
+            final expense = expenses.fold(
+                0.0,
+                (acc, expense) =>
+                    expense.amount < 0 ? acc + expense.amount : acc);
 
             if (expenses.isEmpty) {
               return const Center(
-                child:
-                    Text('No expenses. Click the add button to add a new one.'),
+                child: Text(
+                  'No expenses. Click the add button to add a new one.',
+                ),
               );
             }
 
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemCount: expenses.length,
-                itemBuilder: (context, index) {
-                  return ExpenseCard(
-                    expense: expenses[index],
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => EditExpensePage(
-                            expense: expenses[index],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+            return Column(
+              children: [
+                ExpenseStatus(
+                  income: income,
+                  expense: expense,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      itemCount: expenses.length,
+                      itemBuilder: (context, index) {
+                        return ExpenseCard(
+                          expense: expenses[index],
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => EditExpensePage(
+                                  expense: expenses[index],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
             );
           }
 

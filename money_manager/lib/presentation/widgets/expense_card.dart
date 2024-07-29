@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/utils/currency_formatter.dart';
 import 'package:money_manager/core/utils/date_formatter.dart';
 import 'package:money_manager/data/models/expense.dart';
 
@@ -19,7 +20,7 @@ class ExpenseCard extends StatelessWidget {
         title: Text(expense.desc),
         subtitle: Text(formatDate(expense.date)),
         trailing: Text(
-          expense.amount.toStringAsFixed(2),
+          formatCurrency(expense.amount),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         onTap: onTap,
